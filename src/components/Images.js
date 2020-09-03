@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container'
 import Col from 'react-bootstrap/Col'
 import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
+import Button from 'react-bootstrap/Button'
 
 export default class Images extends Component {
 
@@ -16,12 +17,24 @@ export default class Images extends Component {
         return manyRows
     }
 
+    handleDelete = (event) => {
+        const targetId = event.target.id
+        fetch(`http://localhost:3001/images/${targetId}`, {
+            method: "DELETE",
+        })
+            .then(() => {
+                this.props.removeImage(targetId)
+                document.getElementById(`card${targetId}`).remove()
+            })
+    }
+
     renderRows = (partialImageArray) => {
-        return <Row>
+        return <Row key={partialImageArray[0].id - 0.5}>
             {partialImageArray.map((image) => {
-                return <Col>
-                    <Card style={{width: '300px', height: "300px"}}>
+                return <Col key={image.id}>
+                    <Card style={{width: '300px', height: "300px"}} id={`card${image.id}`}>
                         <Card.Img style={{width: '300px', height: "200px"}} variant="top" src={image.link}/>
+                        <Button id={image.id} onClick={this.handleDelete} variant="danger">Delete</Button>
                     </Card>
                 </Col>
             })}
@@ -33,17 +46,6 @@ export default class Images extends Component {
             <div>
                 <Container>
                     {this.renderImages(this.props.imageList)}
-                    {/* <Card style={{ width: '18rem' }}>
-                        <Card.Img variant="top" src="https://i.ytimg.com/vi/qnkMobV-GvU/maxresdefault.jpg" />
-                        <Card.Body>
-                            <Card.Title>Card Title</Card.Title>
-                            <Card.Text>
-                                Some quick example text to build on the card title and make up the bulk of
-                                the card's content.
-                            </Card.Text>
-                            <Button variant="primary">Go somewhere</Button>
-                        </Card.Body>
-                    </Card> */}
                 </Container>
             </div>
         )
