@@ -24,17 +24,22 @@ export default class Images extends Component {
         })
             .then(() => {
                 this.props.removeImage(targetId)
-                document.getElementById(`card${targetId}`).remove()
+                document.getElementById(`column${targetId}`).remove()
             })
     }
 
     renderRows = (partialImageArray) => {
         return <Row key={partialImageArray[0].id - 0.5}>
             {partialImageArray.map((image) => {
-                return <Col key={image.id}>
-                    <Card style={{width: '300px', height: "300px"}} id={`card${image.id}`}>
-                        <Card.Img style={{width: '300px', height: "200px"}} variant="top" src={image.link}/>
-                        <Button id={image.id} onClick={this.handleDelete} variant="danger">Delete</Button>
+                return <Col key={image.id} id={`column${image.id}`}>
+                    <Card style={{width: '300px', height: "300px"}}>
+                        <Card.Img style={{width: '300px', height: "200px"}} variant="top" src={image.link} alt={image.alt}/>
+                        <Card.Body>
+                            <Card.Title>
+                                {image.title}
+                            </Card.Title>
+                            <Button id={image.id} onClick={this.handleDelete} variant="danger">Delete</Button>
+                        </Card.Body>
                     </Card>
                 </Col>
             })}

@@ -6,7 +6,9 @@ import Container from 'react-bootstrap/Container'
 export default class ImageForm extends Component {
     state = {
         id: "",
+        title: "",
         link: "",
+        alt: ""
     }
 
     handleChange = (event) => {
@@ -30,13 +32,22 @@ export default class ImageForm extends Component {
                 if(newImage.error) {
                     alert(newImage.error_messages)
                 } else {
-                    console.log(newImage)
                     this.setState({
                         id: newImage.id
                     })
                     this.props.addImage(this.state)
+                    this.resetForm()
                 }
             })
+    }
+
+    resetForm = () => {
+        this.setState({
+            id: "",
+            title: "",
+            link: "",
+            alt: ""
+        })
     }
 
     render() {
@@ -44,9 +55,17 @@ export default class ImageForm extends Component {
             <div>
                 <Container>
                     <Form onSubmit={this.handleSubmit}>
+                        <Form.Group controlId="title">
+                            <Form.Label>Image Title</Form.Label>
+                            <Form.Control onChange={this.handleChange} type="text" value={this.state.title}/>
+                        </Form.Group>
                         <Form.Group controlId="link">
                             <Form.Label>Image Link</Form.Label>
                             <Form.Control onChange={this.handleChange} type="text" value={this.state.link}/>
+                        </Form.Group>
+                        <Form.Group controlId="alt">
+                            <Form.Label>Image Alt Text</Form.Label>
+                            <Form.Control onChange={this.handleChange} type="text" value={this.state.alt}/>
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             Submit

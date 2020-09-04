@@ -32,7 +32,6 @@ export default class ImageContainer extends Component {
                 imageList: previousState.imageList.filter((image) => image.id !== id)
             }
         })
-        console.log("test")
     }
 
     render() {
