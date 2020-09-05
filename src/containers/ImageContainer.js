@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Images from '../components/Images'
 import ImageForm from '../components/ImageForm'
+import Container from 'react-bootstrap/esm/Container'
 
 export default class ImageContainer extends Component {
     state = {
@@ -37,8 +38,11 @@ export default class ImageContainer extends Component {
     render() {
         return (
             <div>
-                <ImageForm addImage={this.addImage}/>
-                <Images imageList={this.state.imageList} removeImage={this.removeImage}/>
+                <Container>
+                    <h1>Welcome to the Imaginarium!</h1>
+                    <ImageForm addImage={this.addImage} />
+                    <Images imageList={this.state.imageList} removeImage={this.removeImage} />
+                </Container>
             </div>
         )
     }
